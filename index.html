@@ -322,33 +322,32 @@
     function SubmissionProgress() {
       const total = 89, ns = 10, ip = 35, nr = 40, done = 4;
       const pct = (n) => `${(n/total*100).toFixed(1)}%`;
+      const stats = [
+        { icon:"far fa-circle",           color:"#757575", label:"Not Started", count:ns   },
+        { icon:"fas fa-pencil-alt",        color:"#f2c654", label:"In Progress", count:ip  },
+        { icon:"fas fa-comment-alt-check", color:"#008fcc", label:"Needs Review", count:nr },
+        { icon:"fas fa-check-circle",      color:"#5c9f53", label:"Complete",    count:done },
+      ];
       return (
-        <div style={{ background:"white", border:"1px solid #e9e9e9", borderRadius:10, padding:"18px 24px", marginBottom:16 }}>
-          <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:12 }}>
-            <span style={{ fontSize:15, fontWeight:700, color:"#2e2e2e" }}>Submission Progress</span>
-            <span style={{ fontSize:13, color:"#575757" }}>{total} Total Sections</span>
+        <div style={{ background:"white", border:"1px solid #e9e9e9", borderRadius:8, padding:12, marginBottom:16, boxShadow:"0 1px 4px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.06)" }}>
+          <div style={{ display:"flex", alignItems:"center", gap:16, marginBottom:12 }}>
+            <span style={{ fontSize:17, fontWeight:500, color:"#2e2e2e", fontFamily:"'Gotham Rounded', sans-serif" }}>Submission Progress</span>
+            <span style={{ fontSize:14, color:"#2e2e2e", fontWeight:400 }}>{total} Total Sections</span>
           </div>
           {/* Progress bar */}
-          <div style={{ display:"flex", borderRadius:4, overflow:"hidden", height:10, marginBottom:14 }}>
-            <div style={{ width:pct(ns),  background:"#e9e9e9" }} title={`Not Started: ${ns}`}/>
-            <div style={{ width:pct(ip),  background:"#f59e0b" }} title={`In Progress: ${ip}`}/>
-            <div style={{ width:pct(nr),  background:"#1d4986" }} title={`Needs Review: ${nr}`}/>
-            <div style={{ width:pct(done),background:"#5c9f53" }} title={`Complete: ${done}`}/>
+          <div style={{ display:"flex", borderRadius:1000, overflow:"hidden", height:10, background:"#e9e9e9", marginBottom:12 }}>
+            <div style={{ width:pct(ns),  background:"#e9e9e9" }}/>
+            <div style={{ width:pct(ip),  background:"#f2c654", borderLeft:"3px solid white" }}/>
+            <div style={{ width:pct(nr),  background:"#008fcc", borderLeft:"3px solid white" }}/>
+            <div style={{ width:pct(done),background:"#5c9f53", borderLeft:"3px solid white" }}/>
           </div>
           {/* Stats */}
-          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr 1fr" }}>
-            {[
-              { icon:<i className="far fa-circle" style={{ fontSize:16 }}/>,            label:"Not Started", count:ns,   color:"#575757", bdr:true },
-              { icon:<i className="fas fa-pencil" style={{ fontSize:15 }}/>,           label:"In Progress", count:ip,   color:"#92400e", bdr:true },
-              { icon:<i className="fas fa-circle-check" style={{ fontSize:16 }}/>,     label:"Needs Review", count:nr,  color:"#1d4986", bdr:true },
-              { icon:<i className="fas fa-check-double" style={{ fontSize:15 }}/>,     label:"Complete",     count:done, color:"#5c9f53", bdr:false },
-            ].map(s => (
-              <div key={s.label} style={{ display:"flex", alignItems:"center", gap:10, padding:"0 16px", borderRight:s.bdr?"1px solid #e9e9e9":"none" }}>
-                <span style={{ fontSize:18, color:s.color }}>{s.icon}</span>
-                <div>
-                  <div style={{ fontSize:20, fontWeight:700, color:"#2e2e2e", lineHeight:1.1 }}>{s.count}</div>
-                  <div style={{ fontSize:12, color:"#575757" }}>{s.label}</div>
-                </div>
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr 1fr", gap:8 }}>
+            {stats.map(s => (
+              <div key={s.label} style={{ display:"flex", alignItems:"center", gap:4, background:"white", border:"1px solid #e9e9e9", borderRadius:4, padding:"8px 16px 8px 8px" }}>
+                <i className={s.icon} style={{ fontSize:16, color:s.color, width:24, textAlign:"center", flexShrink:0 }}/>
+                <span style={{ fontSize:17, fontWeight:500, color:"#082247", fontFamily:"'Gotham Rounded', sans-serif", marginRight:8 }}>{s.count}</span>
+                <span style={{ fontSize:14, fontWeight:600, color:"#757575" }}>{s.label}</span>
               </div>
             ))}
           </div>
