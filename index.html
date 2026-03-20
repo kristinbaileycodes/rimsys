@@ -9,10 +9,36 @@
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet"/>
   <style>
+    /* ── Design tokens ── */
+    :root {
+      --brand-navy:        #082247;  /* BrandNavy/Base_300 */
+      --brand-navy-200:    #1D4986;  /* Brand/Brand Navy/200 */
+      --btn-light-blue:    #008fcc;  /* Button Color/Light Blue/Primary */
+      --btn-light-purple:  #763493;  /* Button Color/Light Purple/Primary */
+      --btn-green:         #5c9f53;  /* Button Color/Green/Primary */
+      --btn-gray:          #757575;  /* Button Color/Gray/Primary */
+      --btn-gray-pressed:  #575757;  /* Button Color/Gray/Pressed */
+      --light-blue-50:     #d4f2ff;
+      --light-blue-200:    #20a5de;
+      --light-green-50:    #dcf6d9;
+      --light-green-300:   #5c9f53;
+      --light-green-400:   #44753e;
+      --gray-100:          #e9e9e9;
+      --gray-200:          #cdcccc;
+      --gray-300:          #aba9a9;
+      --gray-400:          #908f8f;
+      --gray-500:          #757575;
+      --gray-600:          #575757;
+      --gray-700:          #2e2e2e;
+      --field-radius:      8px;
+      --shadow-xs:         0 1px 2px rgba(16,24,40,0.05);
+    }
+
     * { box-sizing: border-box; }
     html, body, #root { height: 100%; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14px; color: #111827; }
+    body { font-family: 'Nunito Sans', 'Segoe UI', sans-serif; font-size: 14px; color: var(--gray-700); }
 
     /* ── Modal ── */
     .modal-overlay { position: fixed; inset: 0; background: rgba(8,34,71,0.45); display: flex; align-items: center; justify-content: center; z-index: 200; }
@@ -21,63 +47,63 @@
     @keyframes popIn { from { opacity:0; transform:scale(0.95); } to { opacity:1; transform:scale(1); } }
 
     /* ── Buttons ── */
-    .btn-primary { background:#1d4986; color:white; border:none; border-radius:6px; padding:7px 16px; font-size:13px; cursor:pointer; font-weight:500; display:inline-flex; align-items:center; gap:6px; transition:background .1s; }
+    .btn-primary { background:var(--brand-navy-200); color:white; border:none; border-radius:var(--field-radius); padding:7px 16px; font-size:13px; cursor:pointer; font-weight:600; font-family:'Nunito Sans',sans-serif; display:inline-flex; align-items:center; gap:6px; transition:background .1s; box-shadow:var(--shadow-xs); }
     .btn-primary:hover { background:#163d73; }
-    .btn-secondary { background:white; color:#374151; border:1px solid #d1d5db; border-radius:6px; padding:7px 14px; font-size:13px; cursor:pointer; font-weight:500; display:inline-flex; align-items:center; gap:6px; transition:background .1s; }
+    .btn-secondary { background:white; color:var(--gray-700); border:1px solid var(--gray-200); border-radius:var(--field-radius); padding:7px 14px; font-size:13px; cursor:pointer; font-weight:600; font-family:'Nunito Sans',sans-serif; display:inline-flex; align-items:center; gap:6px; transition:background .1s; box-shadow:var(--shadow-xs); }
     .btn-secondary:hover { background:#f9fafb; }
-    .btn-ghost { background:transparent; border:none; cursor:pointer; padding:4px 8px; border-radius:4px; font-size:13px; color:#9ca3af; transition:all .1s; }
-    .btn-ghost:hover { background:#f3f4f6; color:#6b7280; }
-    .btn-icon { background:transparent; border:1px solid #d1d5db; border-radius:6px; width:30px; height:30px; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; color:#6b7280; transition:background .1s; }
-    .btn-icon:hover { background:#f3f4f6; }
+    .btn-ghost { background:transparent; border:none; cursor:pointer; padding:4px 8px; border-radius:var(--field-radius); font-size:13px; color:var(--gray-400); transition:all .1s; }
+    .btn-ghost:hover { background:var(--gray-100); color:var(--gray-600); }
+    .btn-icon { background:white; border:1px solid var(--gray-200); border-radius:var(--field-radius); width:30px; height:30px; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; color:var(--gray-600); transition:background .1s; box-shadow:var(--shadow-xs); }
+    .btn-icon:hover { background:var(--gray-100); }
 
     /* ── Tabs ── */
-    .page-tab { padding:10px 16px; font-size:14px; cursor:pointer; border:none; background:none; border-bottom:2px solid transparent; color:#6b7280; font-weight:500; white-space:nowrap; transition:all .12s; }
-    .page-tab.active { color:#1d4986; border-bottom-color:#1d4986; }
-    .page-tab:hover:not(.active) { color:#374151; }
-    .modal-tab { padding:10px 18px; font-size:14px; cursor:pointer; border:none; background:none; border-bottom:2px solid transparent; color:#6b7280; font-weight:500; transition:all .12s; }
-    .modal-tab.active { color:#1d4986; border-bottom-color:#1d4986; }
-    .modal-tab:hover:not(.active) { color:#374151; }
+    .page-tab { padding:10px 16px; font-size:14px; cursor:pointer; border:none; background:none; border-bottom:2px solid transparent; color:var(--gray-500); font-weight:600; white-space:nowrap; transition:all .12s; font-family:'Nunito Sans',sans-serif; }
+    .page-tab.active { color:var(--brand-navy-200); border-bottom-color:var(--brand-navy-200); }
+    .page-tab:hover:not(.active) { color:var(--gray-700); }
+    .modal-tab { padding:10px 18px; font-size:14px; cursor:pointer; border:none; background:none; border-bottom:2px solid transparent; color:var(--gray-500); font-weight:600; font-family:'Nunito Sans',sans-serif; transition:all .12s; }
+    .modal-tab.active { color:var(--brand-navy-200); border-bottom-color:var(--brand-navy-200); }
+    .modal-tab:hover:not(.active) { color:var(--gray-700); }
 
     /* ── Filter pill tabs ── */
-    .filter-tab { padding:5px 12px; font-size:13px; border-radius:6px; border:none; cursor:pointer; font-weight:500; transition:all .1s; }
-    .filter-tab.active { background:#1d4986; color:white; }
-    .filter-tab:not(.active) { background:none; color:#6b7280; }
-    .filter-tab:not(.active):hover { background:#f3f4f6; color:#374151; }
+    .filter-tab { padding:5px 12px; font-size:13px; border-radius:var(--field-radius); border:none; cursor:pointer; font-weight:600; font-family:'Nunito Sans',sans-serif; transition:all .1s; }
+    .filter-tab.active { background:var(--brand-navy-200); color:white; }
+    .filter-tab:not(.active) { background:none; color:var(--gray-500); }
+    .filter-tab:not(.active):hover { background:var(--gray-100); color:var(--gray-700); }
 
     /* ── Section list ── */
-    .section-row { display:flex; align-items:center; gap:8px; padding:9px 10px; cursor:pointer; border-radius:6px; transition:background .1s; border:1px solid transparent; }
+    .section-row { display:flex; align-items:center; gap:8px; padding:9px 10px; cursor:pointer; border-radius:var(--field-radius); transition:background .1s; border:1px solid transparent; }
     .section-row:hover { background:#f9fafb; }
-    .section-row.active { background:#eff6ff; border-color:#bfdbfe; }
-    .section-row .drag { color:#d1d5db; font-size:12px; cursor:grab; user-select:none; }
+    .section-row.active { background:var(--light-blue-50); border-color:var(--light-blue-200); }
+    .section-row .drag { color:var(--gray-200); font-size:12px; cursor:grab; user-select:none; }
 
     /* ── Form fields ── */
-    .field-input { border:1px solid #d1d5db; border-radius:6px; padding:7px 10px; font-size:13px; width:100%; color:#374151; background:white; transition:border .1s; }
-    .field-input:focus { outline:none; border-color:#1d4986; box-shadow:0 0 0 3px rgba(29,73,134,.1); }
+    .field-input { border:1px solid var(--gray-300); border-radius:var(--field-radius); padding:7px 10px; font-size:13px; width:100%; color:var(--gray-700); background:white; transition:border .1s; font-family:'Nunito Sans',sans-serif; }
+    .field-input:focus { outline:none; border-color:var(--brand-navy-200); box-shadow:0 0 0 3px rgba(29,73,134,.1); }
 
     /* ── Role select ── */
-    .role-select { border:1px solid #d1d5db; border-radius:6px; padding:5px 28px 5px 10px; font-size:13px; color:#374151; background:white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 8px center; appearance:none; cursor:pointer; }
+    .role-select { border:1px solid var(--gray-300); border-radius:var(--field-radius); padding:5px 28px 5px 10px; font-size:13px; color:var(--gray-700); background:white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 8px center; appearance:none; cursor:pointer; font-family:'Nunito Sans',sans-serif; }
 
     /* ── Person row ── */
-    .person-row { display:flex; align-items:center; gap:10px; padding:8px 10px; border-radius:8px; transition:background .1s; }
+    .person-row { display:flex; align-items:center; gap:10px; padding:8px 10px; border-radius:var(--field-radius); transition:background .1s; }
     .person-row:hover { background:#f9fafb; }
-    .person-row.just-added { background:#f0f9ff; }
+    .person-row.just-added { background:var(--light-blue-50); }
 
     /* ── Stage btn ── */
-    .stage-btn { display:flex; flex-direction:column; align-items:center; gap:5px; background:none; border:none; cursor:pointer; padding:6px 8px; border-radius:8px; flex-shrink:0; transition:background .1s; }
-    .stage-btn:hover { background:#f3f4f6; }
-    .stage-btn.current { outline:2px solid #1d4986; outline-offset:2px; }
+    .stage-btn { display:flex; flex-direction:column; align-items:center; gap:5px; background:none; border:none; cursor:pointer; padding:6px 8px; border-radius:var(--field-radius); flex-shrink:0; transition:background .1s; }
+    .stage-btn:hover { background:var(--gray-100); }
+    .stage-btn.current { outline:2px solid var(--brand-navy-200); outline-offset:2px; }
 
     /* ── Date input ── */
-    .date-input { display:flex; align-items:center; border:1px solid #d1d5db; border-radius:6px; padding:7px 10px; font-size:13px; color:#374151; gap:8px; cursor:pointer; background:white; }
-    .date-input:hover { border-color:#9ca3af; }
+    .date-input { display:flex; align-items:center; border:1px solid var(--gray-300); border-radius:var(--field-radius); padding:7px 10px; font-size:13px; color:var(--gray-600); gap:8px; cursor:pointer; background:white; }
+    .date-input:hover { border-color:var(--gray-400); }
 
     /* ── Table ── */
     .doc-table { width:100%; border-collapse:collapse; font-size:13px; }
-    .doc-table th { text-align:left; padding:8px 12px; font-weight:600; font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:#9ca3af; border-bottom:1px solid #e5e7eb; }
-    .doc-table td { padding:10px 12px; border-bottom:1px solid #f3f4f6; color:#374151; }
+    .doc-table th { text-align:left; padding:8px 12px; font-weight:700; font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--gray-400); border-bottom:1px solid var(--gray-100); font-family:'Nunito Sans',sans-serif; }
+    .doc-table td { padding:10px 12px; border-bottom:1px solid #f3f4f6; color:var(--gray-600); }
 
     /* ── Nav context chip ── */
-    .nav-chip { display:inline-flex; align-items:center; gap:4px; padding:4px 10px; border-radius:4px; font-size:13px; font-weight:500; cursor:pointer; }
+    .nav-chip { display:inline-flex; align-items:center; gap:4px; padding:4px 10px; border-radius:4px; font-size:13px; font-weight:600; cursor:pointer; font-family:'Nunito Sans',sans-serif; }
     .nav-chip.active { background:rgba(255,255,255,0.15); color:white; }
     .nav-chip:not(.active) { color:rgba(255,255,255,0.55); }
     .nav-chip:not(.active):hover { color:rgba(255,255,255,0.8); }
@@ -133,15 +159,15 @@
       "In Progress":  { bg:"#fef3c7", fg:"#92400e" },
       "Complete":     { bg:"#dcf6d9", fg:"#44753e" },
       "Needs Review": { bg:"#dbeafe", fg:"#1d4986" },
-      "Not Started":  { bg:"#f3f4f6", fg:"#6b7280" },
+      "Not Started":  { bg:"#f3f4f6", fg:"#575757" },
     };
 
     // ── Shared small components ───────────────────────────────────────
-    function Avatar({ initials, bg="#e5e7eb", fg="#374151", size=32 }) {
+    function Avatar({ initials, bg="#e9e9e9", fg="#575757", size=32 }) {
       return <div style={{ width:size, height:size, borderRadius:"50%", background:bg, color:fg, display:"flex", alignItems:"center", justifyContent:"center", fontSize:size*.375, fontWeight:700, flexShrink:0, userSelect:"none" }}>{initials}</div>;
     }
     function StatusBadge({ label, color }) {
-      const MAP = { blue:["#e8f0fe","#1d4986"], green:["#dcf6d9","#44753e"], yellow:["#fef3c7","#92400e"], red:["#fce8e6","#bc2014"], gray:["#f3f4f6","#6b7280"] };
+      const MAP = { blue:["#e8f0fe","#1d4986"], green:["#dcf6d9","#44753e"], yellow:["#fef3c7","#92400e"], red:["#fce8e6","#bc2014"], gray:["#f3f4f6","#575757"] };
       const [bg, fg] = MAP[color] || MAP.gray;
       return <span style={{ background:bg, color:fg, padding:"2px 10px", borderRadius:99, fontSize:12, fontWeight:600 }}>{label}</span>;
     }
@@ -150,8 +176,8 @@
       return <span style={{ background:c.bg, color:c.fg, padding:"2px 8px", borderRadius:99, fontSize:11, fontWeight:600, flexShrink:0, whiteSpace:"nowrap" }}>{status}</span>;
     }
     function RoleChip({ role }) {
-      const MAP = { owner:["#fef3c7","#92400e","Owner"], editor:["#e8f0fe","#1d4986","Editor"], viewer:["#f3f4f6","#6b7280","Viewer"] };
-      const [bg,fg,label] = MAP[role]||["#f3f4f6","#6b7280",role];
+      const MAP = { owner:["#fef3c7","#92400e","Owner"], editor:["#e8f0fe","#1d4986","Editor"], viewer:["#f3f4f6","#575757","Viewer"] };
+      const [bg,fg,label] = MAP[role]||["#f3f4f6","#575757",role];
       return <span style={{ background:bg, color:fg, padding:"2px 8px", borderRadius:99, fontSize:11, fontWeight:600 }}>{label}</span>;
     }
 
@@ -161,12 +187,12 @@
     const IconInfo = () => <svg width="17" height="17" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>;
     const IconGrid = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="5" r="1.5"/><circle cx="12" cy="5" r="1.5"/><circle cx="19" cy="5" r="1.5"/><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/><circle cx="5" cy="19" r="1.5"/><circle cx="12" cy="19" r="1.5"/><circle cx="19" cy="19" r="1.5"/></svg>;
     const IconChevron = ({ size=10, dir="down" }) => <svg width={size} height={size} fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" style={{ transform: dir==="right"?"rotate(-90deg)":dir==="up"?"rotate(180deg)":"none" }}><path d="M6 9l6 6 6-6"/></svg>;
-    const IconCal = () => <svg width="14" height="14" fill="none" stroke="#9ca3af" strokeWidth="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>;
+    const IconCal = () => <svg width="14" height="14" fill="none" stroke="#908f8f" strokeWidth="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>;
     const IconPlus = () => <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>;
     const IconPencil = () => <svg width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>;
     const IconEye = () => <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>;
-    const IconHome = () => <svg width="14" height="14" fill="none" stroke="#6b7280" strokeWidth="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>;
-    const IconLock = () => <svg width="13" height="13" fill="none" stroke="#9ca3af" strokeWidth="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>;
+    const IconHome = () => <svg width="14" height="14" fill="none" stroke="#575757" strokeWidth="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>;
+    const IconLock = () => <svg width="13" height="13" fill="none" stroke="#908f8f" strokeWidth="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>;
     const IconDots = () => <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>;
     const IconFilter = () => <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>;
     const IconX = () => <svg width="11" height="11" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>;
@@ -212,12 +238,12 @@
     // ── Breadcrumb bar ────────────────────────────────────────────────
     function BreadcrumbBar() {
       return (
-        <div style={{ background:"white", borderBottom:"1px solid #e5e7eb", height:47, display:"flex", alignItems:"center", padding:"0 24px", gap:8, flexShrink:0 }}>
+        <div style={{ background:"white", borderBottom:"1px solid #e9e9e9", height:47, display:"flex", alignItems:"center", padding:"0 24px", gap:8, flexShrink:0 }}>
           <IconHome />
-          <span style={{ color:"#9ca3af", fontSize:13 }}>›</span>
-          <span style={{ color:"#6b7280", fontSize:13, cursor:"pointer" }} onMouseEnter={e=>e.target.style.color="#1d4986"} onMouseLeave={e=>e.target.style.color="#6b7280"}>Submissions</span>
-          <span style={{ color:"#9ca3af", fontSize:13 }}>›</span>
-          <span style={{ color:"#374151", fontSize:13, fontWeight:500 }}>ReggieCare Monitor – Regulatory Submission Doc</span>
+          <span style={{ color:"#908f8f", fontSize:13 }}>›</span>
+          <span style={{ color:"#575757", fontSize:13, cursor:"pointer" }} onMouseEnter={e=>e.target.style.color="#1d4986"} onMouseLeave={e=>e.target.style.color="#575757"}>Submissions</span>
+          <span style={{ color:"#908f8f", fontSize:13 }}>›</span>
+          <span style={{ color:"#575757", fontSize:13, fontWeight:500 }}>ReggieCare Monitor – Regulatory Submission Doc</span>
         </div>
       );
     }
@@ -225,7 +251,7 @@
     // ── Page header ───────────────────────────────────────────────────
     function PageHeader({ onManageAccess }) {
       return (
-        <div style={{ background:"white", borderBottom:"1px solid #e5e7eb", padding:"20px 24px 12px", flexShrink:0 }}>
+        <div style={{ background:"white", borderBottom:"1px solid #e9e9e9", padding:"20px 24px 12px", flexShrink:0 }}>
           {/* Row 1: title + actions */}
           <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:12 }}>
             <h1 style={{ fontSize:20, fontWeight:500, color:"#082247", lineHeight:"28px", fontFamily:"'Gotham Rounded', sans-serif" }}>
@@ -278,7 +304,7 @@
     function TabBar({ active, setActive }) {
       const tabs = ["Submission Content","Details","Activity","Correspondence","Products","Registrations","Documents","Downloads"];
       return (
-        <div style={{ background:"white", borderBottom:"1px solid #e5e7eb", display:"flex", alignItems:"center", justifyContent:"space-between", padding:"0 8px 0 16px", flexShrink:0 }}>
+        <div style={{ background:"white", borderBottom:"1px solid #e9e9e9", display:"flex", alignItems:"center", justifyContent:"space-between", padding:"0 8px 0 16px", flexShrink:0 }}>
           <div style={{ display:"flex", overflowX:"auto" }}>
             {tabs.map(t => (
               <button key={t} className={`page-tab${active===t?" active":""}`} onClick={()=>setActive(t)}>{t}</button>
@@ -286,7 +312,7 @@
           </div>
           <div style={{ display:"flex", gap:4, flexShrink:0, padding:"0 8px" }}>
             <button className="btn-icon"><IconFilter /></button>
-            <button className="btn-icon" title="More"><span style={{ fontSize:16, color:"#6b7280" }}>⋯</span></button>
+            <button className="btn-icon" title="More"><span style={{ fontSize:16, color:"#575757" }}>⋯</span></button>
           </div>
         </div>
       );
@@ -297,31 +323,31 @@
       const total = 89, ns = 10, ip = 35, nr = 40, done = 4;
       const pct = (n) => `${(n/total*100).toFixed(1)}%`;
       return (
-        <div style={{ background:"white", border:"1px solid #e5e7eb", borderRadius:10, padding:"18px 24px", marginBottom:16 }}>
+        <div style={{ background:"white", border:"1px solid #e9e9e9", borderRadius:10, padding:"18px 24px", marginBottom:16 }}>
           <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:12 }}>
-            <span style={{ fontSize:15, fontWeight:700, color:"#111827" }}>Submission Progress</span>
-            <span style={{ fontSize:13, color:"#6b7280" }}>{total} Total Sections</span>
+            <span style={{ fontSize:15, fontWeight:700, color:"#2e2e2e" }}>Submission Progress</span>
+            <span style={{ fontSize:13, color:"#575757" }}>{total} Total Sections</span>
           </div>
           {/* Progress bar */}
           <div style={{ display:"flex", borderRadius:4, overflow:"hidden", height:10, marginBottom:14 }}>
-            <div style={{ width:pct(ns),  background:"#e5e7eb" }} title={`Not Started: ${ns}`}/>
+            <div style={{ width:pct(ns),  background:"#e9e9e9" }} title={`Not Started: ${ns}`}/>
             <div style={{ width:pct(ip),  background:"#f59e0b" }} title={`In Progress: ${ip}`}/>
-            <div style={{ width:pct(nr),  background:"#3b82f6" }} title={`Needs Review: ${nr}`}/>
-            <div style={{ width:pct(done),background:"#16a34a" }} title={`Complete: ${done}`}/>
+            <div style={{ width:pct(nr),  background:"#1d4986" }} title={`Needs Review: ${nr}`}/>
+            <div style={{ width:pct(done),background:"#5c9f53" }} title={`Complete: ${done}`}/>
           </div>
           {/* Stats */}
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr 1fr" }}>
             {[
-              { icon:<i className="far fa-circle" style={{ fontSize:16 }}/>,            label:"Not Started", count:ns,   color:"#6b7280", bdr:true },
+              { icon:<i className="far fa-circle" style={{ fontSize:16 }}/>,            label:"Not Started", count:ns,   color:"#575757", bdr:true },
               { icon:<i className="fas fa-pencil" style={{ fontSize:15 }}/>,           label:"In Progress", count:ip,   color:"#92400e", bdr:true },
               { icon:<i className="fas fa-circle-check" style={{ fontSize:16 }}/>,     label:"Needs Review", count:nr,  color:"#1d4986", bdr:true },
-              { icon:<i className="fas fa-check-double" style={{ fontSize:15 }}/>,     label:"Complete",     count:done, color:"#16a34a", bdr:false },
+              { icon:<i className="fas fa-check-double" style={{ fontSize:15 }}/>,     label:"Complete",     count:done, color:"#5c9f53", bdr:false },
             ].map(s => (
-              <div key={s.label} style={{ display:"flex", alignItems:"center", gap:10, padding:"0 16px", borderRight:s.bdr?"1px solid #e5e7eb":"none" }}>
+              <div key={s.label} style={{ display:"flex", alignItems:"center", gap:10, padding:"0 16px", borderRight:s.bdr?"1px solid #e9e9e9":"none" }}>
                 <span style={{ fontSize:18, color:s.color }}>{s.icon}</span>
                 <div>
-                  <div style={{ fontSize:20, fontWeight:700, color:"#111827", lineHeight:1.1 }}>{s.count}</div>
-                  <div style={{ fontSize:12, color:"#6b7280" }}>{s.label}</div>
+                  <div style={{ fontSize:20, fontWeight:700, color:"#2e2e2e", lineHeight:1.1 }}>{s.count}</div>
+                  <div style={{ fontSize:12, color:"#575757" }}>{s.label}</div>
                 </div>
               </div>
             ))}
@@ -341,11 +367,11 @@
       );
 
       return (
-        <div style={{ width:296, flexShrink:0, background:"white", border:"1px solid #e5e7eb", borderRadius:10, display:"flex", flexDirection:"column", overflow:"hidden" }}>
+        <div style={{ width:296, flexShrink:0, background:"white", border:"1px solid #e9e9e9", borderRadius:10, display:"flex", flexDirection:"column", overflow:"hidden" }}>
           {/* Header */}
           <div style={{ padding:"14px 14px 10px", borderBottom:"1px solid #f3f4f6" }}>
             <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:10 }}>
-              <span style={{ fontWeight:700, fontSize:14, color:"#111827" }}>Sections</span>
+              <span style={{ fontWeight:700, fontSize:14, color:"#2e2e2e" }}>Sections</span>
               <div style={{ display:"flex", gap:6 }}>
                 <button className="btn-secondary" style={{ padding:"5px 10px", fontSize:12 }}><IconPlus />Add</button>
                 <button className="btn-secondary" style={{ padding:"5px 10px", fontSize:12 }}>Review Sections</button>
@@ -353,9 +379,9 @@
             </div>
             {/* Search */}
             <div style={{ display:"flex", gap:6 }}>
-              <div style={{ flex:1, display:"flex", alignItems:"center", gap:6, border:"1px solid #d1d5db", borderRadius:6, padding:"6px 10px", background:"white" }}>
-                <span style={{ color:"#9ca3af" }}><IconSearch /></span>
-                <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search…" style={{ border:"none", outline:"none", fontSize:13, flex:1, color:"#374151" }}/>
+              <div style={{ flex:1, display:"flex", alignItems:"center", gap:6, border:"1px solid #cdcccc", borderRadius:6, padding:"6px 10px", background:"white" }}>
+                <span style={{ color:"#908f8f" }}><IconSearch /></span>
+                <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search…" style={{ border:"none", outline:"none", fontSize:13, flex:1, color:"#575757" }}/>
               </div>
               <button className="btn-secondary" style={{ padding:"6px 10px", gap:4, fontSize:12 }}><IconFilter />Filter</button>
             </div>
@@ -379,9 +405,9 @@
               >
                 <span className="drag" style={{ fontSize:13, letterSpacing:-1 }}>⋮⋮</span>
                 {s.indent===0 && s.id===5 && (
-                  <span style={{ color:"#9ca3af", fontSize:11 }}><IconChevron size={9}/></span>
+                  <span style={{ color:"#908f8f", fontSize:11 }}><IconChevron size={9}/></span>
                 )}
-                <span style={{ flex:1, fontSize:13, color: selected===s.id?"#1d4986":"#374151", fontWeight: selected===s.id?500:400, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
+                <span style={{ flex:1, fontSize:13, color: selected===s.id?"#1d4986":"#575757", fontWeight: selected===s.id?500:400, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
                   {s.label}
                 </span>
                 <SectionBadge status={s.status} />
@@ -400,12 +426,12 @@
         { initials:"MB", bg:"#ede9fe", fg:"#5b21b6" },
       ];
       return (
-        <div style={{ background:"white", border:"1px solid #e5e7eb", borderRadius:10, padding:20, marginBottom:16 }}>
+        <div style={{ background:"white", border:"1px solid #e9e9e9", borderRadius:10, padding:20, marginBottom:16 }}>
           {/* Title row */}
           <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", gap:16, marginBottom:16 }}>
-            <h3 style={{ fontSize:14, fontWeight:600, color:"#111827", lineHeight:1.5, flex:1 }}>{title}</h3>
+            <h3 style={{ fontSize:14, fontWeight:600, color:"#2e2e2e", lineHeight:1.5, flex:1 }}>{title}</h3>
             <div style={{ display:"flex", gap:8, flexShrink:0 }}>
-              <button style={{ display:"flex", alignItems:"center", gap:5, background:STATUS_MAP[sectionStatus]?.bg||"#f3f4f6", color:STATUS_MAP[sectionStatus]?.fg||"#6b7280", border:`1px solid ${STATUS_MAP[sectionStatus]?.bg||"#e5e7eb"}`, borderRadius:6, padding:"5px 10px", fontSize:12, fontWeight:600, cursor:"pointer" }}>
+              <button style={{ display:"flex", alignItems:"center", gap:5, background:STATUS_MAP[sectionStatus]?.bg||"#f3f4f6", color:STATUS_MAP[sectionStatus]?.fg||"#575757", border:`1px solid ${STATUS_MAP[sectionStatus]?.bg||"#e9e9e9"}`, borderRadius:6, padding:"5px 10px", fontSize:12, fontWeight:600, cursor:"pointer" }}>
                 {sectionStatus} <IconChevron size={9}/>
               </button>
               <button className="btn-primary"><IconPencil />Edit Content</button>
@@ -416,28 +442,28 @@
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:"16px 24px", marginBottom:20 }}>
             {/* Source */}
             <div>
-              <div style={{ fontSize:11, fontWeight:700, color:"#9ca3af", textTransform:"uppercase", letterSpacing:".06em", marginBottom:6 }}>Source</div>
+              <div style={{ fontSize:11, fontWeight:700, color:"#908f8f", textTransform:"uppercase", letterSpacing:".06em", marginBottom:6 }}>Source</div>
               <div style={{ display:"inline-flex", alignItems:"center", gap:5, background:"#f5f3ff", border:"1px solid #ddd6fe", borderRadius:99, padding:"4px 10px" }}>
                 <IconAI /><span style={{ fontSize:12, fontWeight:600, color:"#7c3aed" }}>Rimsys AI</span>
               </div>
             </div>
             {/* Date Modified */}
             <div>
-              <div style={{ fontSize:11, fontWeight:700, color:"#9ca3af", textTransform:"uppercase", letterSpacing:".06em", marginBottom:6 }}>Date Modified</div>
-              <div style={{ fontSize:13, color:"#374151" }}>Jan 4, 2026</div>
+              <div style={{ fontSize:11, fontWeight:700, color:"#908f8f", textTransform:"uppercase", letterSpacing:".06em", marginBottom:6 }}>Date Modified</div>
+              <div style={{ fontSize:13, color:"#575757" }}>Jan 4, 2026</div>
             </div>
             {/* Owner(s) */}
             <div>
-              <div style={{ fontSize:11, fontWeight:700, color:"#9ca3af", textTransform:"uppercase", letterSpacing:".06em", marginBottom:6 }}>Owner(s)</div>
+              <div style={{ fontSize:11, fontWeight:700, color:"#908f8f", textTransform:"uppercase", letterSpacing:".06em", marginBottom:6 }}>Owner(s)</div>
               <div style={{ display:"flex", alignItems:"center", gap:4, flexWrap:"wrap" }}>
                 {owners.map((o,i) => (
-                  <div key={i} style={{ display:"flex", alignItems:"center", gap:4, background:"#f3f4f6", border:"1px solid #e5e7eb", borderRadius:99, padding:"2px 8px 2px 2px" }}>
+                  <div key={i} style={{ display:"flex", alignItems:"center", gap:4, background:"#f3f4f6", border:"1px solid #e9e9e9", borderRadius:99, padding:"2px 8px 2px 2px" }}>
                     <Avatar initials={o.initials} bg={o.bg} fg={o.fg} size={18}/>
-                    <span style={{ fontSize:12, color:"#374151" }}>{o.initials==="TS"?"Tina Smith":"Mark Bailey"}</span>
-                    <span style={{ color:"#9ca3af", cursor:"pointer", fontSize:11, marginLeft:2 }}><IconX /></span>
+                    <span style={{ fontSize:12, color:"#575757" }}>{o.initials==="TS"?"Tina Smith":"Mark Bailey"}</span>
+                    <span style={{ color:"#908f8f", cursor:"pointer", fontSize:11, marginLeft:2 }}><IconX /></span>
                   </div>
                 ))}
-                <button style={{ display:"flex", alignItems:"center", gap:3, border:"1px solid #d1d5db", borderRadius:99, padding:"2px 8px", fontSize:12, color:"#374151", background:"white", cursor:"pointer" }}>
+                <button style={{ display:"flex", alignItems:"center", gap:3, border:"1px solid #cdcccc", borderRadius:99, padding:"2px 8px", fontSize:12, color:"#575757", background:"white", cursor:"pointer" }}>
                   +1 <IconChevron size={8}/>
                 </button>
               </div>
@@ -445,25 +471,25 @@
 
             {/* Due Date */}
             <div>
-              <div style={{ fontSize:11, fontWeight:700, color:"#9ca3af", textTransform:"uppercase", letterSpacing:".06em", marginBottom:6 }}>Due Date</div>
-              <div className="date-input"><span style={{ fontSize:13, color:"#374151" }}>01/08/2026</span><IconCal /></div>
+              <div style={{ fontSize:11, fontWeight:700, color:"#908f8f", textTransform:"uppercase", letterSpacing:".06em", marginBottom:6 }}>Due Date</div>
+              <div className="date-input"><span style={{ fontSize:13, color:"#575757" }}>01/08/2026</span><IconCal /></div>
             </div>
             {/* Start Date */}
             <div>
-              <div style={{ fontSize:11, fontWeight:700, color:"#9ca3af", textTransform:"uppercase", letterSpacing:".06em", marginBottom:6 }}>Start Date</div>
-              <div className="date-input"><span style={{ fontSize:13, color:"#9ca3af" }}>Select Date</span><IconCal /></div>
+              <div style={{ fontSize:11, fontWeight:700, color:"#908f8f", textTransform:"uppercase", letterSpacing:".06em", marginBottom:6 }}>Start Date</div>
+              <div className="date-input"><span style={{ fontSize:13, color:"#908f8f" }}>Select Date</span><IconCal /></div>
             </div>
             {/* End Date */}
             <div>
-              <div style={{ fontSize:11, fontWeight:700, color:"#9ca3af", textTransform:"uppercase", letterSpacing:".06em", marginBottom:6 }}>End Date</div>
-              <div className="date-input"><span style={{ fontSize:13, color:"#9ca3af" }}>Select Date</span><IconCal /></div>
+              <div style={{ fontSize:11, fontWeight:700, color:"#908f8f", textTransform:"uppercase", letterSpacing:".06em", marginBottom:6 }}>End Date</div>
+              <div className="date-input"><span style={{ fontSize:13, color:"#908f8f" }}>Select Date</span><IconCal /></div>
             </div>
           </div>
 
           {/* Appendix documents */}
           <div>
             <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:10 }}>
-              <span style={{ fontSize:13, fontWeight:600, color:"#374151" }}>Appendix documents</span>
+              <span style={{ fontSize:13, fontWeight:600, color:"#575757" }}>Appendix documents</span>
               <button className="btn-secondary" style={{ fontSize:12, padding:"5px 10px" }}><IconPlus />Add Document <IconChevron size={9}/></button>
             </div>
             <table className="doc-table">
@@ -477,7 +503,7 @@
               </thead>
               <tbody>
                 <tr>
-                  <td colSpan={4} style={{ textAlign:"center", padding:"24px 12px", color:"#9ca3af" }}>
+                  <td colSpan={4} style={{ textAlign:"center", padding:"24px 12px", color:"#908f8f" }}>
                     <div style={{ fontWeight:500, marginBottom:4 }}>No appendix documents added yet</div>
                     <div style={{ fontSize:12 }}>Add or link a document to include as reference material.</div>
                   </td>
@@ -534,13 +560,13 @@
         <div style={{ padding:"20px", flex:1, overflowY:"auto", display:"flex", flexDirection:"column", gap:20 }}>
           <div style={{ display:"flex", gap:8, position:"relative" }}>
             <div style={{ flex:1, position:"relative" }}>
-              <input value={search} onChange={e=>{setSearch(e.target.value);setDropdownOpen(true);}} onFocus={()=>setDropdownOpen(true)} onBlur={()=>setTimeout(()=>setDropdownOpen(false),150)} placeholder="Add people by name or email…" style={{ width:"100%", border:"1px solid #d1d5db", borderRadius:6, padding:"8px 12px", fontSize:14 }}/>
+              <input value={search} onChange={e=>{setSearch(e.target.value);setDropdownOpen(true);}} onFocus={()=>setDropdownOpen(true)} onBlur={()=>setTimeout(()=>setDropdownOpen(false),150)} placeholder="Add people by name or email…" style={{ width:"100%", border:"1px solid #cdcccc", borderRadius:6, padding:"8px 12px", fontSize:14 }}/>
               {dropdownOpen && search.length>0 && suggestions.length>0 && (
-                <div style={{ position:"absolute", top:"calc(100% + 4px)", left:0, right:0, zIndex:10, background:"white", border:"1px solid #e5e7eb", borderRadius:8, boxShadow:"0 4px 20px rgba(0,0,0,0.1)", overflow:"hidden" }}>
+                <div style={{ position:"absolute", top:"calc(100% + 4px)", left:0, right:0, zIndex:10, background:"white", border:"1px solid #e9e9e9", borderRadius:8, boxShadow:"0 4px 20px rgba(0,0,0,0.1)", overflow:"hidden" }}>
                   {suggestions.map(u=>(
                     <button key={u.id} onMouseDown={()=>addPerson(u)} style={{ display:"flex", alignItems:"center", gap:10, width:"100%", padding:"10px 14px", background:"none", border:"none", cursor:"pointer", textAlign:"left" }} onMouseEnter={e=>e.currentTarget.style.background="#f9fafb"} onMouseLeave={e=>e.currentTarget.style.background="none"}>
                       <Avatar initials={u.initials} bg={u.bg} fg={u.fg} size={30}/>
-                      <div><div style={{ fontSize:14, fontWeight:500, color:"#111827" }}>{u.name}</div><div style={{ fontSize:12, color:"#6b7280" }}>{u.email}</div></div>
+                      <div><div style={{ fontSize:14, fontWeight:500, color:"#2e2e2e" }}>{u.name}</div><div style={{ fontSize:12, color:"#575757" }}>{u.email}</div></div>
                     </button>
                   ))}
                 </div>
@@ -551,14 +577,14 @@
             </select>
           </div>
           <div>
-            <div style={{ fontSize:11, fontWeight:700, color:"#9ca3af", textTransform:"uppercase", letterSpacing:".07em", marginBottom:8 }}>People with access</div>
+            <div style={{ fontSize:11, fontWeight:700, color:"#908f8f", textTransform:"uppercase", letterSpacing:".07em", marginBottom:8 }}>People with access</div>
             <div style={{ display:"flex", flexDirection:"column", gap:2 }}>
               {people.map(p=>(
                 <div key={p.id} className={`person-row${justAdded===p.id?" just-added":""}`}>
                   <Avatar initials={p.initials} bg={p.bg} fg={p.fg} size={34}/>
                   <div style={{ flex:1, minWidth:0 }}>
-                    <div style={{ fontSize:14, fontWeight:500, color:"#111827" }}>{p.name}{p.role==="owner"&&<span style={{ marginLeft:6, fontSize:12, color:"#9ca3af", fontWeight:400 }}>(you)</span>}</div>
-                    <div style={{ fontSize:12, color:"#9ca3af", overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{p.email}</div>
+                    <div style={{ fontSize:14, fontWeight:500, color:"#2e2e2e" }}>{p.name}{p.role==="owner"&&<span style={{ marginLeft:6, fontSize:12, color:"#908f8f", fontWeight:400 }}>(you)</span>}</div>
+                    <div style={{ fontSize:12, color:"#908f8f", overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{p.email}</div>
                   </div>
                   {p.role==="owner" ? <RoleChip role="owner"/> : <><select value={p.role} onChange={e=>updateRole(p.id,e.target.value)} className="role-select"><option value="editor">Editor</option><option value="viewer">Viewer</option><option value="owner">Owner</option></select><button className="btn-ghost" onClick={()=>removePerson(p.id)}>✕</button></>}
                 </div>
@@ -566,19 +592,19 @@
             </div>
           </div>
           <div style={{ borderTop:"1px solid #f3f4f6", paddingTop:16 }}>
-            <div style={{ fontSize:11, fontWeight:700, color:"#9ca3af", textTransform:"uppercase", letterSpacing:".07em", marginBottom:10 }}>General access</div>
+            <div style={{ fontSize:11, fontWeight:700, color:"#908f8f", textTransform:"uppercase", letterSpacing:".07em", marginBottom:10 }}>General access</div>
             <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
               {[
                 {id:"restricted", icon:"fas fa-lock",     label:"Restricted",   desc:"Only people listed above can open this record"},
                 {id:"company",    icon:"fas fa-building",  label:"Company-wide", desc:"Anyone at Acme Pharma can find and view this record"},
               ].map(opt=>(
-                <label key={opt.id} style={{ display:"flex", alignItems:"flex-start", gap:10, padding:"12px 14px", borderRadius:8, cursor:"pointer", border:`2px solid ${generalAccess===opt.id?"#1d4986":"#e5e7eb"}`, background:generalAccess===opt.id?"#f0f5ff":"#fafafa", transition:"all .12s" }}>
+                <label key={opt.id} style={{ display:"flex", alignItems:"flex-start", gap:10, padding:"12px 14px", borderRadius:8, cursor:"pointer", border:`2px solid ${generalAccess===opt.id?"#1d4986":"#e9e9e9"}`, background:generalAccess===opt.id?"#f0f5ff":"#fafafa", transition:"all .12s" }}>
                   <input type="radio" name="ga" value={opt.id} checked={generalAccess===opt.id} onChange={()=>setGeneralAccess(opt.id)} style={{ marginTop:3, accentColor:"#1d4986" }}/>
                   <div>
-                    <div style={{ fontSize:14, fontWeight:600, color:"#111827", display:"flex", alignItems:"center", gap:8 }}>
-                      <i className={opt.icon} style={{ fontSize:13, color: generalAccess===opt.id?"#1d4986":"#6b7280" }}></i>{opt.label}
+                    <div style={{ fontSize:14, fontWeight:600, color:"#2e2e2e", display:"flex", alignItems:"center", gap:8 }}>
+                      <i className={opt.icon} style={{ fontSize:13, color: generalAccess===opt.id?"#1d4986":"#575757" }}></i>{opt.label}
                     </div>
-                    <div style={{ fontSize:12, color:"#6b7280", marginTop:2 }}>{opt.desc}</div>
+                    <div style={{ fontSize:12, color:"#575757", marginTop:2 }}>{opt.desc}</div>
                   </div>
                 </label>
               ))}
@@ -597,44 +623,44 @@
       return (
         <div style={{ padding:"20px", flex:1, overflowY:"auto", display:"flex", flexDirection:"column", gap:20 }}>
           <div>
-            <div style={{ fontSize:11, fontWeight:700, color:"#9ca3af", textTransform:"uppercase", letterSpacing:".07em", marginBottom:10 }}>Handoff model</div>
+            <div style={{ fontSize:11, fontWeight:700, color:"#908f8f", textTransform:"uppercase", letterSpacing:".07em", marginBottom:10 }}>Handoff model</div>
             <div style={{ display:"flex", gap:8 }}>
               {[{id:"additive",label:"Collaborative (Additive)",desc:"Users keep access as the record progresses"},{id:"handoff",label:"True Handoff",desc:"Access transfers — prior users lose edit rights"}].map(opt=>(
-                <button key={opt.id} onClick={()=>setMode(opt.id)} style={{ flex:1, padding:"12px 14px", borderRadius:8, cursor:"pointer", border:`2px solid ${mode===opt.id?"#1d4986":"#e5e7eb"}`, background:mode===opt.id?"#f0f5ff":"#fafafa", textAlign:"left", transition:"all .12s" }}>
-                  <div style={{ fontSize:13, fontWeight:700, color:mode===opt.id?"#1d4986":"#374151" }}>{opt.label}</div>
-                  <div style={{ fontSize:12, color:"#6b7280", marginTop:3 }}>{opt.desc}</div>
+                <button key={opt.id} onClick={()=>setMode(opt.id)} style={{ flex:1, padding:"12px 14px", borderRadius:8, cursor:"pointer", border:`2px solid ${mode===opt.id?"#1d4986":"#e9e9e9"}`, background:mode===opt.id?"#f0f5ff":"#fafafa", textAlign:"left", transition:"all .12s" }}>
+                  <div style={{ fontSize:13, fontWeight:700, color:mode===opt.id?"#1d4986":"#575757" }}>{opt.label}</div>
+                  <div style={{ fontSize:12, color:"#575757", marginTop:3 }}>{opt.desc}</div>
                 </button>
               ))}
             </div>
           </div>
           <div>
-            <div style={{ fontSize:11, fontWeight:700, color:"#9ca3af", textTransform:"uppercase", letterSpacing:".07em", marginBottom:12 }}>Workflow stages</div>
+            <div style={{ fontSize:11, fontWeight:700, color:"#908f8f", textTransform:"uppercase", letterSpacing:".07em", marginBottom:12 }}>Workflow stages</div>
             <div style={{ display:"flex", alignItems:"flex-start", gap:0 }}>
               {STAGES.map((s,i)=>{
                 const done=i<currentStage, current=i===currentStage;
                 return (
                   <React.Fragment key={s.id}>
                     <button className={`stage-btn${current?" current":""}`} onClick={()=>setCurrentStage(i)}>
-                      <div style={{ width:32, height:32, borderRadius:"50%", background:done?"#44753e":current?"#1d4986":"#e5e7eb", color:done||current?"white":"#9ca3af", display:"flex", alignItems:"center", justifyContent:"center", fontSize:12, fontWeight:700 }}>{done?<i className="fas fa-check" style={{ fontSize:11 }}/>:i+1}</div>
-                      <div style={{ fontSize:11, fontWeight:current?600:400, color:current?"#1d4986":"#6b7280", textAlign:"center", maxWidth:64, lineHeight:1.3 }}>{s.label}</div>
+                      <div style={{ width:32, height:32, borderRadius:"50%", background:done?"#44753e":current?"#1d4986":"#e9e9e9", color:done||current?"white":"#908f8f", display:"flex", alignItems:"center", justifyContent:"center", fontSize:12, fontWeight:700 }}>{done?<i className="fas fa-check" style={{ fontSize:11 }}/>:i+1}</div>
+                      <div style={{ fontSize:11, fontWeight:current?600:400, color:current?"#1d4986":"#575757", textAlign:"center", maxWidth:64, lineHeight:1.3 }}>{s.label}</div>
                     </button>
-                    {i<STAGES.length-1&&<div style={{ height:2, flex:1, marginTop:16, background:i<currentStage?"#44753e":"#e5e7eb", minWidth:8 }}/>}
+                    {i<STAGES.length-1&&<div style={{ height:2, flex:1, marginTop:16, background:i<currentStage?"#44753e":"#e9e9e9", minWidth:8 }}/>}
                   </React.Fragment>
                 );
               })}
             </div>
           </div>
-          <div style={{ border:"1px solid #e5e7eb", borderRadius:10, padding:16, background:"#fafafa" }}>
+          <div style={{ border:"1px solid #e9e9e9", borderRadius:10, padding:16, background:"#fafafa" }}>
             <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:10 }}>
-              <div><div style={{ fontSize:14, fontWeight:700, color:"#111827" }}>{stage.label}</div><div style={{ fontSize:12, color:"#6b7280" }}>{stage.description}</div></div>
+              <div><div style={{ fontSize:14, fontWeight:700, color:"#2e2e2e" }}>{stage.label}</div><div style={{ fontSize:12, color:"#575757" }}>{stage.description}</div></div>
               <StatusBadge label="Viewing" color="blue"/>
             </div>
-            <div style={{ fontSize:11, fontWeight:600, color:"#9ca3af", textTransform:"uppercase", letterSpacing:".06em", marginBottom:8 }}>Has access</div>
+            <div style={{ fontSize:11, fontWeight:600, color:"#908f8f", textTransform:"uppercase", letterSpacing:".06em", marginBottom:8 }}>Has access</div>
             <div style={{ display:"flex", gap:8, flexWrap:"wrap" }}>
               {stageUsers(stage).map(p=>(
-                <div key={p.id} style={{ display:"flex", alignItems:"center", gap:6, background:"white", border:"1px solid #e5e7eb", borderRadius:99, padding:"4px 10px 4px 4px" }}>
+                <div key={p.id} style={{ display:"flex", alignItems:"center", gap:6, background:"white", border:"1px solid #e9e9e9", borderRadius:99, padding:"4px 10px 4px 4px" }}>
                   <Avatar initials={p.initials} bg={p.bg} fg={p.fg} size={22}/>
-                  <span style={{ fontSize:13, color:"#374151", fontWeight:500 }}>{p.name}</span>
+                  <span style={{ fontSize:13, color:"#575757", fontWeight:500 }}>{p.name}</span>
                   <RoleChip role={p.role}/>
                 </div>
               ))}
@@ -643,14 +669,14 @@
           {nextStage&&(
             <div style={{ border:"1px dashed #c7d6ed", borderRadius:10, padding:16, background:"white" }}>
               <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:10 }}>
-                <span style={{ fontSize:13, fontWeight:600, color:"#6b7280" }}>Next: <span style={{ color:"#111827" }}>{nextStage.label}</span></span>
+                <span style={{ fontSize:13, fontWeight:600, color:"#575757" }}>Next: <span style={{ color:"#2e2e2e" }}>{nextStage.label}</span></span>
                 {mode==="handoff"&&losingAccess.length>0&&<span style={{ fontSize:11, background:"#fce8e6", color:"#bc2014", padding:"2px 8px", borderRadius:99, fontWeight:600 }}>{losingAccess.length} user{losingAccess.length>1?"s":""} lose access</span>}
               </div>
               <div style={{ display:"flex", gap:8, flexWrap:"wrap" }}>
                 {stageUsers(nextStage).map(p=>(
-                  <div key={p.id} style={{ display:"flex", alignItems:"center", gap:6, background:"#f9fafb", border:"1px solid #e5e7eb", borderRadius:99, padding:"4px 10px 4px 4px" }}>
+                  <div key={p.id} style={{ display:"flex", alignItems:"center", gap:6, background:"#f9fafb", border:"1px solid #e9e9e9", borderRadius:99, padding:"4px 10px 4px 4px" }}>
                     <Avatar initials={p.initials} bg={p.bg} fg={p.fg} size={22}/>
-                    <span style={{ fontSize:13, color:"#374151" }}>{p.name}</span>
+                    <span style={{ fontSize:13, color:"#575757" }}>{p.name}</span>
                   </div>
                 ))}
                 {mode==="handoff"&&losingAccess.map(p=>(
@@ -660,7 +686,7 @@
                   </div>
                 ))}
               </div>
-              {mode==="additive"&&losingAccess.length>0&&<div style={{ marginTop:10, fontSize:12, color:"#6b7280" }}><i className="fas fa-circle-info" style={{ marginRight:5 }}></i>In additive mode, {losingAccess.map(p=>p.name).join(", ")} keep their existing access.</div>}
+              {mode==="additive"&&losingAccess.length>0&&<div style={{ marginTop:10, fontSize:12, color:"#575757" }}><i className="fas fa-circle-info" style={{ marginRight:5 }}></i>In additive mode, {losingAccess.map(p=>p.name).join(", ")} keep their existing access.</div>}
             </div>
           )}
           {nextStage
@@ -682,8 +708,8 @@
             <div style={{ padding:"18px 20px 0", borderBottom:"1px solid #f3f4f6" }}>
               <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", marginBottom:14 }}>
                 <div>
-                  <div style={{ fontSize:16, fontWeight:700, color:"#111827" }}>Manage Access</div>
-                  <div style={{ fontSize:12, color:"#6b7280", marginTop:2 }}>ReggieCare Monitor – Regulatory Submission Doc</div>
+                  <div style={{ fontSize:16, fontWeight:700, color:"#2e2e2e" }}>Manage Access</div>
+                  <div style={{ fontSize:12, color:"#575757", marginTop:2 }}>ReggieCare Monitor – Regulatory Submission Doc</div>
                 </div>
                 <button className="btn-ghost" onClick={onClose} style={{ fontSize:16, lineHeight:1, marginTop:-2 }}>✕</button>
               </div>
